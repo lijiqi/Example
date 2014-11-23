@@ -25,6 +25,7 @@ public:
 	void PostOrder(NODE *root);
 	void OutputTree(NODE *root);
 	void GetRoot(NODE **root);
+	void CopyTree(NODE *in_root,NODE **out_tree);
 private:
 	NODE *m_pRoot;
 };

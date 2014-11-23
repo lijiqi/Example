@@ -302,3 +302,19 @@ void CTreeOperate::OutputTree(NODE *root)
 		}
 	}
 }
+
+void CTreeOperate::CopyTree( NODE *in_root,NODE **out_tree )
+{
+	if (in_root)
+	{
+		*out_tree = new NODE(in_root->nodeValue);
+		if (in_root->leftChild)
+		{
+			CopyTree(in_root->leftChild,&(*out_tree)->leftChild);
+		}
+		if (in_root->rightChild)
+		{
+			CopyTree(in_root->rightChild,&(*out_tree)->rightChild);
+		}
+	}
+}
