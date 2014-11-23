@@ -14,19 +14,21 @@ int main()
 		cout<<"\n";
 		cout<<"         : ";
 		pTreeOp->PreOrder();
-		cout<<"\n";
+		cout<<"\n\n";
 		cout<<"InOrder  : ";
 		pTreeOp->InOrder(root);
 		cout<<"\n";
 		cout<<"         : ";
 		pTreeOp->InOrder();
-		cout<<"\n";
+		cout<<"\n\n";
 		cout<<"PostOrder: ";
 		pTreeOp->PostOrder(root);
 		cout<<"\n";
 		cout<<"         : ";
-		pTreeOp->PreOrder();
-		cout<<"\n";
+		pTreeOp->PostOrder();
+		cout<<"\n\n";
+		cout<<"The Origin Tree is like : \n";
+		pTreeOp->OutputTree(root);
 	}
 	return 0;
 }

@@ -23,6 +23,7 @@ public:
 	void InOrder(NODE *root);
 	void PostOrder();
 	void PostOrder(NODE *root);
+	void OutputTree(NODE *root);
 	void GetRoot(NODE **root);
 private:
 	NODE *m_pRoot;

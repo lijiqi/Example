@@ -36,12 +36,12 @@ void CTreeOperate::CreateTree(char filepath[])
 			if (bracket == "[")
 			{
 				vT.push_back(bracket);
-				cout<<bracket<<"  ";
+				//cout<<bracket<<"  ";
 			}
 			else if (bracket == "]")
 			{
 				vT.pop_back();
-				cout<<bracket<<"  ";
+				//cout<<bracket<<"  ";
 			}
 		}
 	}
@@ -54,6 +54,7 @@ void CTreeOperate::CreateTree(char filepath[])
 	infile.close();
 
 	infile.open(filepath,ios::in);
+	infile.seekg(ios::beg);
 	NODE *preNode=nullptr;
 	vector<NODE *>vpNode;
 	char nodeDir = 't';
@@ -200,6 +201,34 @@ void CTreeOperate::InOrder(NODE *root)
 }
 
 
+//void CTreeOperate::PostOrder()
+//{
+//	vector<NODE *>vNodeStack;
+//	NODE *pNode = m_pRoot;
+//	NODE *preNode = nullptr;
+//	do 
+//	{
+//		while (pNode)
+//		{
+//			vNodeStack.push_back(pNode);
+//			pNode = pNode->leftChild;
+//		}
+//
+//		pNode = vNodeStack.back();
+//		if (preNode == pNode->rightChild)
+//		{
+//			cout<<pNode->nodeValue<<"  ";
+//			preNode = pNode;
+//			pNode = nullptr;
+//			vNodeStack.pop_back();
+//		}
+//		else
+//		{
+//			pNode = pNode->rightChild;
+//			preNode = nullptr;
+//		}
+//	} while (!vNodeStack.empty() || pNode);
+//}
 void CTreeOperate::PostOrder()
 {
 	vector<NODE *>vNodeStack;
@@ -212,20 +241,18 @@ void CTreeOperate::PostOrder()
 			vNodeStack.push_back(pNode);
 			pNode = pNode->leftChild;
 		}
-
 		pNode = vNodeStack.back();
-		if (pNode->rightChild && preNode == nullptr)
+		if (preNode == pNode->rightChild)
 		{
-			pNode = pNode->rightChild;
+			cout<<pNode->nodeValue<<"  ";
+			preNode = pNode;
+			pNode = nullptr;
+			vNodeStack.pop_back();
 		}
 		else
 		{
-			if (preNode == nullptr)
-			{
-				preNode = pNode;
-				cout<<pNode->nodeValue<<"  ";
-				vNodeStack.pop_back();
-			}
+			pNode = pNode->rightChild;
+			preNode = nullptr;
 		}
 	} while (!vNodeStack.empty() || pNode);
 }
@@ -253,5 +280,25 @@ void CTreeOperate::GetRoot(NODE **root)
 	else
 	{
 		*root = nullptr;
+	}
+}
+
+void CTreeOperate::OutputTree(NODE *root)
+{
+	if (root)
+	{
+		NODE *pNode = root;
+		cout<<pNode->nodeValue;
+		if (pNode->leftChild || pNode->rightChild)
+		{
+			cout<<" [ ";
+			OutputTree(pNode->leftChild);
+			if (pNode->rightChild)
+			{
+				cout<<" , ";
+			}
+			OutputTree(pNode->rightChild);
+			cout<<" ] ";
+		}
 	}
 }
