@@ -318,3 +318,62 @@ void CTreeOperate::CopyTree( NODE *in_root,NODE **out_tree )
 		}
 	}
 }
+
+void CTreeOperate::InThreadTree( NODE *root , NODE **rHead)
+{
+	NODE *pNode = root;
+	NODE *rootHead = new NODE("rootHead");
+	rootHead->lThread = true;
+	rootHead->rThread = false;
+	rootHead->rightChild = root;
+	NODE *preNode = rootHead;
+	vector<NODE *>vNodeStack;
+	do 
+	{
+		while (pNode)
+		{
+			if (!pNode->leftChild)
+			{
+				pNode->lThread = true;
+			}
+			if (!pNode->rightChild)
+			{
+				pNode->rThread = true;
+			}
+			vNodeStack.push_back(pNode);
+			pNode = pNode->leftChild;
+		}
+		pNode = vNodeStack.back();
+		vNodeStack.pop_back();
+		if (pNode->lThread)
+		{
+			pNode->leftChild = preNode;
+		}
+		if (preNode->rThread)
+		{
+			preNode->rightChild = pNode;
+			preNode = pNode;
+		}
+		pNode = pNode->rightChild;
+	} while (!vNodeStack.empty() || pNode);
+	preNode->rightChild = rootHead;
+	rootHead->leftChild = preNode;
+	*rHead = rootHead;
+}
+
+void CTreeOperate::InOrderThread( NODE *rootHead )
+{
+	NODE *pNode = rootHead->rightChild;
+	if (pNode)
+	{
+		while(pNode->leftChild)
+		{
+			pNode = pNode->leftChild;
+		}
+		while (pNode != rootHead)
+		{
+			cout<<pNode->nodeValue<<"  ";
+			pNode = pNode->rightChild;
+		}
+	}
+}

@@ -26,6 +26,8 @@ public:
 	void OutputTree(NODE *root);
 	void GetRoot(NODE **root);
 	void CopyTree(NODE *in_root,NODE **out_tree);
+	void InThreadTree(NODE *root , NODE **rHead);
+	void InOrderThread(NODE *rootHead);
 private:
 	NODE *m_pRoot;
 };
