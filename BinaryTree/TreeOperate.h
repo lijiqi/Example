@@ -26,8 +26,14 @@ public:
 	void OutputTree(NODE *root);
 	void GetRoot(NODE **root);
 	void CopyTree(NODE *in_root,NODE **out_tree);
+	//以下是只针对中序线索二叉树的部分
 	void InThreadTree(NODE *root , NODE **rHead);
 	void InOrderThread(NODE *rootHead);
+	void InROrderThread(NODE *rootHead);
+	void InFirstNode(NODE *root,NODE **out_node);
+	void InLastNode(NODE *root,NODE **out_node);
+	void InPreNode(NODE *node,NODE **preNode);
+	void InNextNode(NODE *node,NODE **postNode);
 private:
 	NODE *m_pRoot;
 };

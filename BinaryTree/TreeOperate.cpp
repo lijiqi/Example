@@ -319,15 +319,68 @@ void CTreeOperate::CopyTree( NODE *in_root,NODE **out_tree )
 	}
 }
 
+//void CTreeOperate::InThreadTree( NODE *root , NODE **rHead)
+//{
+//	vector<NODE *>vNodeStack;
+//	
+//	NODE *rootHead = new NODE("rootHead");  //////////线索话二叉树，引进一个头节点
+//	rootHead->lThread = false;
+//	rootHead->rThread = true;
+//	rootHead->leftChild = root;
+//
+//	NODE *pNode = root;
+//	NODE *preNode = rootHead;
+//	
+//	do 
+//	{
+//		while (pNode)
+//		{
+//			if (!pNode->leftChild)
+//			{
+//				pNode->lThread = true;
+//			}
+//			if (!pNode->rightChild)
+//			{
+//				pNode->rThread = true;
+//			}
+//			vNodeStack.push_back(pNode);
+//			pNode = pNode->leftChild;
+//		}
+//		pNode = vNodeStack.back();
+//		vNodeStack.pop_back();
+//
+//		if (pNode->lThread)
+//		{
+//			pNode->leftChild = preNode;
+//		}
+//		if (preNode->rThread)
+//		{
+//			preNode->rightChild = pNode;
+//		}
+//		preNode = pNode;
+//		pNode = pNode->rightChild;
+//	} while (!vNodeStack.empty() || pNode);
+//	preNode->rightChild = rootHead;
+//	rootHead->rightChild = preNode;
+//	*rHead = rootHead;
+//}
+
 void CTreeOperate::InThreadTree( NODE *root , NODE **rHead)
 {
-	NODE *pNode = root;
-	NODE *rootHead = new NODE("rootHead");
-	rootHead->lThread = true;
-	rootHead->rThread = false;
-	rootHead->rightChild = root;
-	NODE *preNode = rootHead;
+	if (!root)
+	{
+		*rHead = nullptr;
+		return;
+	}
 	vector<NODE *>vNodeStack;
+	NODE *rootHead = new NODE("rootHead");
+	rootHead->lThread = false;
+	rootHead->rThread = true;
+	rootHead->leftChild = root;
+
+	NODE *pNode = root;
+	NODE *preNode = rootHead;
+	
 	do 
 	{
 		while (pNode)
@@ -352,28 +405,154 @@ void CTreeOperate::InThreadTree( NODE *root , NODE **rHead)
 		if (preNode->rThread)
 		{
 			preNode->rightChild = pNode;
-			preNode = pNode;
 		}
+		preNode = pNode;
 		pNode = pNode->rightChild;
 	} while (!vNodeStack.empty() || pNode);
 	preNode->rightChild = rootHead;
-	rootHead->leftChild = preNode;
+	rootHead->rightChild = preNode;
 	*rHead = rootHead;
 }
 
 void CTreeOperate::InOrderThread( NODE *rootHead )
 {
-	NODE *pNode = rootHead->rightChild;
+	if (!rootHead)
+	{
+		rootHead = nullptr;
+		return;
+	}
+	NODE *pNode;
+	if (rootHead->nodeValue == "rootHead")  
+	{
+		pNode = rootHead->leftChild;
+	}
+	else
+	{
+		pNode = rootHead;
+	}
+
 	if (pNode)
 	{
-		while(pNode->leftChild)
+		NODE *ouNode;
+		InFirstNode(pNode,&ouNode);
+		while (ouNode != rootHead)
 		{
-			pNode = pNode->leftChild;
+			cout<<ouNode->nodeValue<<"  ";
+			pNode = ouNode;
+			InNextNode(pNode,&ouNode);
 		}
-		while (pNode != rootHead)
+	}
+}
+
+void CTreeOperate::InROrderThread(NODE *rootHead)
+{
+	if (!rootHead)
+	{
+		rootHead = nullptr;
+		return;
+	}
+	NODE *pNode;
+	if (rootHead->nodeValue == "rootHead")  
+	{
+		pNode = rootHead->leftChild;
+	}
+	else
+	{
+		pNode = rootHead;
+	}
+
+	if (pNode)
+	{
+		NODE *ouNode;
+		InLastNode(pNode,&ouNode);
+		while (ouNode != rootHead)
 		{
-			cout<<pNode->nodeValue<<"  ";
-			pNode = pNode->rightChild;
+			cout<<ouNode->nodeValue<<"  ";
+			pNode = ouNode;
+			InPreNode(pNode,&ouNode);
 		}
+	}
+}
+
+void CTreeOperate::InFirstNode(NODE *root,NODE **out_node)
+{
+	if (!root)
+	{
+		*out_node=nullptr;
+		return;
+	}
+	NODE *pNode;
+	if (root->nodeValue == "rootHead")      //常规方法
+	{
+		pNode = root->leftChild;
+	}
+	else
+	{
+		pNode = root;
+	}
+
+	while (!pNode->lThread)
+	{
+		pNode = pNode->leftChild;
+	}
+	*out_node = pNode;
+}
+
+void CTreeOperate::InLastNode(NODE *root,NODE **out_node)
+{
+	if (!root)
+	{
+		*out_node=nullptr;
+		return;
+	}
+	//*out_node =  root->rightChild;        //方法一，在有引进根节点的情况下
+	NODE *pNode;
+	if (root->nodeValue == "rootHead")      //常规方法
+	{
+		pNode = root->leftChild;
+	}
+	else
+	{
+		pNode = root;
+	}
+
+	while (!pNode->rThread)
+	{
+		pNode = pNode->rightChild;
+	}
+	*out_node = pNode;
+}
+
+void CTreeOperate::InPreNode(NODE *node,NODE **preNode)
+{
+	if (!node)
+	{
+		*preNode = nullptr;
+		return;
+	}
+	if (node->lThread)
+	{
+		*preNode = node->leftChild;
+	}
+	else
+	{
+		InLastNode(node->leftChild,preNode);
+	}
+}
+
+void CTreeOperate::InNextNode(NODE *node,NODE **postNode)
+{
+	if (!node)
+	{
+		*postNode = nullptr;
+		return;
+	}
+	if (node->rThread)
+	{
+		*postNode = node->rightChild;
+	}
+	else
+	{
+		InFirstNode(node->rightChild,postNode);
 	}
 }

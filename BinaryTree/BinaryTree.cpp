@@ -38,7 +38,13 @@ int main()
 		cout<<"\n=================================================================\n";
 		NODE *rootHead;
 		pTreeOp->InThreadTree(broot,&rootHead);
+		cout<<"InOrder  : ";
 		pTreeOp->InOrderThread(rootHead);
+		cout<<"\n";
+		cout<<"         : ";
+		pTreeOp->InROrderThread(rootHead);
+		cout<<"\n";
+		pTreeOp->DeleteTree(broot);
 	}
 	return 0;
 }
