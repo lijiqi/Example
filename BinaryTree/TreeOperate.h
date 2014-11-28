@@ -14,7 +14,7 @@ class CTreeOperate
 public:
 	CTreeOperate();
 	~CTreeOperate();
-	void CreateTree(string &s,NODE *root);
+	//void CreateTree(string &s,NODE *root);
 	void CreateTree(char filepath[]);
 	void DeleteTree(NODE *root);
 	void PreOrder();                  //normal
@@ -34,6 +34,20 @@ public:
 	void InLastNode(NODE *root,NODE **out_node);
 	void InPreNode(NODE *node,NODE **preNode);
 	void InNextNode(NODE *node,NODE **postNode);
+private:
+	NODE *m_pRoot;
+};
+
+class CTree
+{
+public:
+	CTree();
+	~CTree();
+	void CreateTree(char filepath[]);
+	void DeleteTree(NODE *root);
+	void PreOrder(NODE *root);        //由儿子由大到小的序列进行遍历（递归遍历）
+	void ListOrder(NODE *root);
+	void GetRoot(NODE **pRoot);
 private:
 	NODE *m_pRoot;
 };

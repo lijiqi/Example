@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KmpAlgorithm", "KmpAlgorith
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BinaryTree", "BinaryTree\BinaryTree.vcxproj", "{74EF161B-8EB8-4DDB-BD5A-89C6195E1927}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Huffman", "Huffman\Huffman.vcxproj", "{F1ADD242-244F-4FAD-9127-A9572221FAC4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{74EF161B-8EB8-4DDB-BD5A-89C6195E1927}.Debug|Win32.Build.0 = Debug|Win32
 		{74EF161B-8EB8-4DDB-BD5A-89C6195E1927}.Release|Win32.ActiveCfg = Release|Win32
 		{74EF161B-8EB8-4DDB-BD5A-89C6195E1927}.Release|Win32.Build.0 = Release|Win32
+		{F1ADD242-244F-4FAD-9127-A9572221FAC4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F1ADD242-244F-4FAD-9127-A9572221FAC4}.Debug|Win32.Build.0 = Debug|Win32
+		{F1ADD242-244F-4FAD-9127-A9572221FAC4}.Release|Win32.ActiveCfg = Release|Win32
+		{F1ADD242-244F-4FAD-9127-A9572221FAC4}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

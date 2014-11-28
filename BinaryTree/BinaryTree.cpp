@@ -44,7 +44,18 @@ int main()
 		cout<<"         : ";
 		pTreeOp->InROrderThread(rootHead);
 		cout<<"\n";
-		pTreeOp->DeleteTree(broot);
+		//pTreeOp->DeleteTree(broot);				//线索化之后要注意，删除策略要做出改变
+		cout<<"\n=================================================================\n";
 	}
+	//对树的操作处理
+	CTree *pTree = new CTree();
+	NODE *tRoot;
+	pTree->GetRoot(&tRoot);
+	cout<<"PreOrder     : ";
+	pTree->PreOrder(tRoot);
+	cout<<"\n";
+	cout<<"ListOrder    : ";
+	pTree->ListOrder(tRoot);
+	cout<<"\n";
 	return 0;
 }

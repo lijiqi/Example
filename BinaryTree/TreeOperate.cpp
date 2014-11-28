@@ -2,12 +2,13 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <queue>
 using namespace std;
 
 CTreeOperate::CTreeOperate()
 {
 	m_pRoot = nullptr;
-	CreateTree("..\\treenode.xml");
+	CreateTree("..\\binary_tree.xml");
 }
 
 CTreeOperate::~CTreeOperate()
@@ -45,7 +46,7 @@ void CTreeOperate::CreateTree(char filepath[])
 			}
 		}
 	}
-	cout<<"\n";
+	//cout<<"\n";
 	if (!vT.empty())
 	{
 		cerr<<"The tree is illegal , please check again !\n";
@@ -104,18 +105,18 @@ void CTreeOperate::CreateTree(char filepath[])
 	infile.close();
 }
 
-void CTreeOperate::CreateTree(string &s,NODE *root)
-{
-
-}
-
 void CTreeOperate::DeleteTree(NODE *root)
 {
-	if (root)
+	 NODE *pNode = root;
+	if (pNode == nullptr)
 	{
-		DeleteTree(root->leftChild);
-		DeleteTree(root->rightChild);
-		delete root;
+		return;
+	}
+	else
+	{
+		DeleteTree(pNode->leftChild);
+		DeleteTree(pNode->rightChild);
+		delete pNode;
 	}
 }
 
@@ -555,4 +556,134 @@ void CTreeOperate::InNextNode(NODE *node,NODE **postNode)
 	{
 		InFirstNode(node->rightChild,postNode);
 	}
+}
+
+CTree::CTree()
+{
+	m_pRoot = nullptr;
+	CreateTree("..\\tree.xml");
+}
+
+CTree::~CTree()
+{
+	DeleteTree(m_pRoot);
+}
+
+void CTree::CreateTree(char filepath[])
+{
+	ifstream infile;
+	infile.open(filepath,ios::in);
+	if (!infile)
+	{
+		cerr<<"Can't open file :"<<filepath<<endl;
+		return;
+	}
+
+	vector<NODE *>vNodeStack;
+	NODE *pNode;
+	NODE *preNode;
+	char nodeDir = 't';
+	while (!infile.eof())
+	{
+		string s="\0";
+		infile>>s;
+		if (s != "\0")
+		{
+			if (s == "[")
+			{
+				nodeDir = 'f';
+				vNodeStack.push_back(pNode);
+			}
+			else if (s == ",")
+			{
+				nodeDir = 'n';
+			}
+			else if (s == "]")
+			{
+				nodeDir = '\0';
+				preNode = vNodeStack.back();
+				vNodeStack.pop_back();
+			}
+			else
+			{
+				if (nodeDir == 't')
+				{
+					pNode = new NODE(s);
+					preNode = pNode;
+					m_pRoot = pNode;
+				}
+				else if (nodeDir == 'f')
+				{
+					pNode = new NODE(s);
+					preNode->leftChild = pNode;
+					preNode = pNode;
+				}
+				else if (nodeDir == 'n')
+				{
+					pNode = new NODE(s);
+					preNode->rightChild = pNode;
+					preNode = pNode;
+				}
+			}
+		}
+	}
+	infile.close();
+}
+
+void CTree::PreOrder(NODE *root)
+{
+	if (root == nullptr)
+	{
+		return;
+	}
+	NODE *pNode = root;
+	while (pNode)
+	{
+		cout<<pNode->nodeValue<<"  ";
+		pNode = pNode->leftChild;
+		while (pNode)
+		{
+			PreOrder(pNode);
+			pNode = pNode->rightChild;
+		}
+	}
+}
+
+void CTree::GetRoot(NODE **pRoot)
+{
+	*pRoot = m_pRoot;
+}
+
+void CTree::DeleteTree(NODE *root)
+{
+
+}
+
+void CTree::ListOrder(NODE *root)
+{
+	if (root == nullptr)
+	{
+		return;
+	}
+
+	NODE *pNode = root;
+	queue<NODE *>vNodeQueue;
+	do 
+	{
+		while (pNode)
+		{
+			if (pNode->leftChild)
+			{
+				vNodeQueue.push(pNode);
+			}
+			cout<<pNode->nodeValue<<"  ";
+			pNode = pNode->rightChild;
+		}
+		if (!vNodeQueue.empty())
+		{
+			pNode = vNodeQueue.front();   //论队列的正确使用方法
+			pNode = pNode->leftChild;
+			vNodeQueue.pop();
+		}
+	} while (!vNodeQueue.empty() || pNode);
 }
