@@ -148,26 +148,74 @@ void CHuffmanTree::GetHuffRoot(NODE **root)
 	*root = pHuffRoot;
 }
 
-void CHuffmanTree::OutputHuffCode(NODE *root)
+//void CHuffmanTree::OutputHuffCode(NODE *root)
+//{
+//	if (!root)
+//	{
+//		return;
+//	}
+//	int hcode[32] = {0};
+//	int font,tail;
+//	font = tail = 0;
+//	cout<<"+++++++++++++++++++++++++++++++++++++++++++++++\n";
+//	NODE *pNode = root;
+//	vector<int>vBranchStack;
+//	vector<NODE *>vNodeStack;
+//	do 
+//	{
+//		while (pNode)
+//		{
+//			cout<<pNode->info<<" : "<<pNode->weight<<"\n";
+//			vNodeStack.push_back(pNode);
+//			pNode = pNode->lLink;
+//		}
+//		pNode = vNodeStack.back();
+//		vNodeStack.pop_back();
+//		
+//		if (pNode->lLink == nullptr && pNode->rLink == nullptr)
+//		{
+//			//cout<<pNode->info<<" : "<<pNode->weight<<"\n";
+//		}
+//		pNode = pNode->rLink;
+//	} while (!vNodeStack.empty() || pNode);
+//}
+
+
+void CHuffmanTree::OutputHuffCode(NODE *root , int hcode[] , int tail , ofstream& outfile)
 {
 	if (!root)
 	{
 		return;
 	}
-	cout<<"+++++++++++++++++++++++++++++++++++++++++++++++\n";
-	NODE *pNode = root;
-	vector<int>vBranchStack;
-	vector<NODE *>vNodeStack;
-	do 
+	if (!outfile)
 	{
-		while (pNode)
+		cerr<<"Cant't Create file : huffcode.xml \n";
+		return;
+	}
+
+	if (root->lLink == nullptr && root->rLink == nullptr)
+	{
+		cout<<root->info<<" : ";
+		outfile<<root->info<<" : ";
+		for (int i=0;i<tail;++i)
 		{
-			cout<<pNode->info<<" : "<<pNode->weight<<"\n";
-			vNodeStack.push_back(pNode);
-			pNode = pNode->lLink;
+			cout<<hcode[i];
+			outfile<<hcode[i];
 		}
-		pNode = vNodeStack.back();
-		vNodeStack.pop_back();
-		pNode = pNode->rLink;
-	} while (!vNodeStack.empty() || pNode);
+		cout<<"\n";
+		outfile<<"\n";
+		--tail;
+	}
+	else
+	{
+		hcode[tail] = 0;
+		++tail;
+		OutputHuffCode(root->lLink,hcode,tail,outfile);
+		--tail;  //还原（回溯）
+
+		hcode[tail] = 1;
+		++tail;
+		OutputHuffCode(root->rLink,hcode,tail,outfile);
+		--tail;  //还原（回溯）
+	}
 }

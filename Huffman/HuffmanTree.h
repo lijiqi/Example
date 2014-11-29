@@ -1,5 +1,4 @@
 #include "TreeNode.h"
-
 class CHuffmanTree
 {
 public:
@@ -8,7 +7,8 @@ public:
 	void CreateFileInfo(char filepath[]);
 	void CreateTree(NODE **root);
 	void OutputHuffTree(NODE *root);
-	void OutputHuffCode(NODE *root);
+	//void OutputHuffCode(NODE *root);
+	void OutputHuffCode(NODE *root , int hcode[] , int tail , ofstream& outfile);
 	void GetHuffRoot(NODE **root);
 private:
 	void SortNodeArray(NODE* nodeArray , size_t num);
