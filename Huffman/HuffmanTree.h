@@ -3,10 +3,19 @@
 class CHuffmanTree
 {
 public:
-	CHuffmanTree(int arrySize = 256);
+	CHuffmanTree(size_t arrySize = 256);
 	~CHuffmanTree();
 	void CreateFileInfo(char filepath[]);
+	void CreateTree(NODE **root);
+	void OutputHuffTree(NODE *root);
+	void OutputHuffCode(NODE *root);
+	void GetHuffRoot(NODE **root);
 private:
-	int charArrySize;
+	void SortNodeArray(NODE* nodeArray , size_t num);
+	void SwapNode(NODE& desNode , NODE& srcNode);
+	void CopyNode(NODE& desNode , NODE& srcNode);
+	size_t charArrySize;
+	size_t charNum;
 	unsigned long* charIndex;
+	NODE* pHuffRoot;
 };

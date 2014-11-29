@@ -10,7 +10,9 @@ using namespace std;
 
 struct NODE
 {
-	string info;
+	NODE(char inf='\0',unsigned long w=0):info(inf),weight(w){lLink=rLink=nullptr;}
+	//~NODE(){lLink=nullptr;rLink=nullptr;}
+	char info;
 	unsigned long weight;
 	NODE *lLink;
 	NODE *rLink;
