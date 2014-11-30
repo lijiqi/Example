@@ -1,4 +1,6 @@
 //Huffman 编码树及其相关操作
+//数据结构（六大有第二版）第四章相关
+
 #include "HuffmanTree.h"
 #include <fstream>
 using namespace std;

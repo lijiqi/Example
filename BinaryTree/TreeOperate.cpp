@@ -105,6 +105,43 @@ void CTreeOperate::CreateTree(char filepath[])
 	infile.close();
 }
 
+//void CTreeOperate::CreateTree( char* s,NODE *root )
+//{
+//	int slen = strlen(s);
+//	if (0==slen)
+//	{
+//		root = nullptr;
+//		return;
+//	}
+//	vector<NODE *>vNodeStack;
+//	vector<char>vCharStack;
+//	int eq = -1;                 //equal symbol index
+//	for (int i=0;i<slen;++i)
+//	{
+//		if (s[i] == '(')
+//		{
+//			vCharStack.push_back(s[i]);
+//		}
+//		else if (s[i] == ')')
+//		{
+//			vCharStack.pop_back();
+//		}
+//		else if (s[i] == '=')
+//		{
+//			eq = i;
+//		}
+//	}
+//	if (!vCharStack.empty())
+//	{
+//		cerr<<"The bracket is not match !\n";
+//		return;
+//	} 
+//	if (eq != -1)
+//	{
+//		slen = eq - 1;
+//	}
+//}
+
 void CTreeOperate::DeleteTree(NODE *root)
 {
 	 NODE *pNode = root;

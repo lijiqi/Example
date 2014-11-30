@@ -14,7 +14,7 @@ class CTreeOperate
 public:
 	CTreeOperate();
 	~CTreeOperate();
-	//void CreateTree(string &s,NODE *root);
+	//void CreateTree(char* s,NODE *root);
 	void CreateTree(char filepath[]);
 	void DeleteTree(NODE *root);
 	void PreOrder();                  //normal

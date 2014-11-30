@@ -1,3 +1,6 @@
+//本项目下的代码主要是实现对二叉树的创建和遍历等相关的操作
+//数据结构（六大有第二版）书中第四章相关
+
 #include "TreeOperate.h"
 #include <iostream>
 using namespace std;
